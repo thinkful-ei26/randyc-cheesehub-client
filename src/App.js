@@ -2,49 +2,60 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import CheeseList from './components/cheese-list';
 import './App.css';
+import { connect } from 'react-redux'
+// import { cheeseReducer } from './reducers/cheese-reducer';
+//actions
+import { fetchCheeseRequest,fetchCheeseSuccess,fetchCheeseError } from './actions/cheese';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
+  //   this.state = {
 
-      cheeses: [
-        "Bath Blue",
-        "Barkham Blue",
-        "Buxton Blue"
-    ]
+  //     cheeses: [
+  //       "Bath Blue",
+  //       "Barkham Blue",
+  //       "Buxton Blue"
+  //   ]
 
-    }
+  //   }
 
-  }
+  // }
+
+  //<CheeseList cheeses = { this.state.cheeses }/>
+
+
+componentDidMount(){
+
+   this.props.dispatch(fetchCheeseRequest());
+
+}
 
 
   render() {
     return (
       <div className="App">
         hello cheeses
-        <CheeseList cheeses = { this.state.cheeses }/>
+        <CheeseList cheeses = { this.props.cheeses }/>
       </div>
     );
   }
 }
 
-export default App;
+// export default App;
 
+const mapStateToProps = state => {
 
-{/* <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header> */}
+  console.log('state', state);
+
+  return {
+
+    cheeses: state.cheeses
+
+  }
+ 
+}
+
+export default connect(mapStateToProps)(App)
